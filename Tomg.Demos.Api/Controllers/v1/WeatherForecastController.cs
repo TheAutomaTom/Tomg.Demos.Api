@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Tomg.Demos.Api.Controllers
+namespace Tomg.Demos.Api.Controllers.v1
 {
     [ApiController]
     [Route("[controller]")]
@@ -8,7 +8,7 @@ namespace Tomg.Demos.Api.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-            "Frosty", "Frigid", "Chill", "Cool", "Mello", "Sunny", "Shlimey", "Haught", "Scorcher"
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
@@ -21,16 +21,13 @@ namespace Tomg.Demos.Api.Controllers
         [HttpGet(Name = "GetWeatherForecasts")]
         public IEnumerable<WeatherForecast> Get()
         {
-
-            var forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-30, 49),
+                TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
-
-            return forecasts;
         }
     }
 }
