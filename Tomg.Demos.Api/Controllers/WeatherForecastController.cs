@@ -5,8 +5,6 @@ namespace Tomg.Demos.Api.Controllers
 {
     [ApiController]
     [ApiVersion("2.0")]
-    //[Route("api/v{version:apiVersion}/[controller]")]
-    //[Route("api/v2/[controller]")]
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
