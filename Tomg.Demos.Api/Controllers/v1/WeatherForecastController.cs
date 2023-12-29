@@ -1,9 +1,13 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Tomg.Demos.Api.Controllers.v1
 {
     [ApiController]
-    [Route("[controller]")]
+    [ApiVersion("1.0", Deprecated = true)]
+    //[Route("api/v{version:apiVersion}/[controller]")]
+    //[Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -21,6 +25,7 @@ namespace Tomg.Demos.Api.Controllers.v1
         [HttpGet(Name = "GetWeatherForecasts")]
         public IEnumerable<WeatherForecast> Get()
         {
+            _logger.LogInformation($"Deprecated endpoint hit at {DateTime.Now}");
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
