@@ -1,16 +1,16 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Tomg.Demos.Api.Controllers
+namespace Tomg.Demos.Api.Controllers.v1
 {
     [ApiController]
-    [ApiVersion("2.0")]
+    [ApiVersion("1.0", Deprecated = true)]
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
-            "Frigid", "Frosty", "Chill", "Coolio", "Mello", "Sh'lakable", "Sh'limey", "Haught", "Scorcher"
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
@@ -20,21 +20,17 @@ namespace Tomg.Demos.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        [Route("{count}")]
-        public IEnumerable<WeatherForecast> Get(int count)
+        [HttpGet(Name = "GetWeatherForecasts")]
+        public IEnumerable<WeatherForecast> Get()
         {
-            var max = count > 0 ? count : 1;
-
-            var forecasts = Enumerable.Range(1, max).Select(index => new WeatherForecast
+            _logger.LogInformation($"Deprecated endpoint hit at {DateTime.Now}");
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-30, 49),
+                TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
-
-            return forecasts;
         }
     }
 }
